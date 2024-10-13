@@ -51,7 +51,8 @@ To run the application, execute the following command:
   5. Open a pull request.
 
 ## Contact
-  Haneen Sheikha-haneentech01@gmail.com
+  Haneen Sheikha
+  haneentech01@gmail.com
   https://www.linkedin.com/in/haneentech01/
   https://github.com/haneentech01
 
