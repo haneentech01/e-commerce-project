@@ -48,15 +48,14 @@ const SidebarSearchHook = () => {
             }
         }
     }
-
-    var queryCat = "";    
+  
     useEffect(() => {
-        queryCat = catChecked.map(val => "category[in][]=" + val).join("&");
+        const queryCat = catChecked.map(val => "category[in][]=" + val).join("&");
         localStorage.setItem("catCecked", queryCat)
         setTimeout(() => {
             getProduct();
         } , 1000)
-    } , [catChecked])
+    } , [catChecked , getProduct])
 
     const [brandChecked, setBrandChecked] = useState([])
     //when user press any brand
@@ -74,14 +73,14 @@ const SidebarSearchHook = () => {
         }
     }
 
-    var queryBrand = "";
+
     useEffect(() => {
-        queryBrand = brandChecked.map(val => "brand[in][]=" + val).join("&");
+        const queryBrand = brandChecked.map(val => "brand[in][]=" + val).join("&");
         localStorage.setItem("brandCecked", queryBrand)
         setTimeout(() => {
             getProduct();
         }, 1000);
-    }, [brandChecked]);
+    }, [brandChecked, getProduct]);
 
     const [From, setPriceFrom] = useState(0);
     const [To, setToFrom] = useState(0);

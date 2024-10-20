@@ -1,9 +1,10 @@
 import React from "react";
-import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST } from "../type";
+import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, USER_WISHLIST } from "../type";
 
 const inital = {
   addWishList: [],
   removeWishList: [],
+  allWishList: [],
 };
 
 const addToWishListReducer = (state = inital, action) => {
@@ -18,6 +19,12 @@ const addToWishListReducer = (state = inital, action) => {
       return {
         ...state,
         removeWishList: action.payload,
+      };
+
+    case USER_WISHLIST:
+      return {
+        ...state,
+        allWishList: action.payload,
       };
 
     default:
