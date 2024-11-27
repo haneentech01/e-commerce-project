@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getOneProduct,
@@ -10,52 +10,48 @@ import { getOneBrand } from "../../redux/actions/brandAction";
 
 const ViewProductsDetalisHook = (prodID) => {
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getOneProduct(prodID));
-  }, []);
 
+  // الحالة لتخزين البيانات
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // تحميل المنتج فقط عند تغير prodID
+    if (prodID) {
+      dispatch(getOneProduct(prodID));
+    }
+  }, [dispatch, prodID]);
+
+  // استدعاء الـ Redux Store
   const oneProducts = useSelector((state) => state.allProducts.oneProduct);
   const oneCategory = useSelector((state) => state.allCategory.oneCategory);
   const oneBrand = useSelector((state) => state.allBrand.oneBrand);
   const productLike = useSelector((state) => state.allProducts.productLike);
-  
-  //to show products item
-  let item = [];
-  if (oneProducts.data) item = oneProducts.data;
-  else item = [];
+
+  // التعامل مع البيانات
+  let item = oneProducts?.data || [];
+  let images = item.images
+    ? item.images.map((img) => ({ original: img }))
+    : [{ original: mobile }];
+  let cat = oneCategory?.data || [];
+  let brand = oneBrand?.data || [];
+  let prod = productLike?.data || [];
 
   useEffect(() => {
-    if (item.category) dispatch(getOneCategory(item.category));
-    if (item.brand) dispatch(getOneBrand(item.brand));
-    if (item.category) dispatch(getProductLike(item.category));
-  }, [item]);
+    // تحديد إذا كان يجب تحميل الفئة والعلامة التجارية فقط إذا لم تكن موجودة
+    if (item.category && !oneCategory?.data) {
+      dispatch(getOneCategory(item.category));
+    }
+    if (item.brand && !oneBrand?.data) {
+      dispatch(getOneBrand(item.brand));
+    }
+    if (item.category && !productLike?.data) {
+      dispatch(getProductLike(item.category));
+    }
+    setLoading(false); // عندما تنتهي من تحميل البيانات
+  }, [item, dispatch, oneCategory?.data, oneBrand?.data, productLike?.data]);
 
-  //to view images gallery
-  let images = [];
-  if (item.images)
-    images = item.images.map((img) => {
-      return { original: img };
-    });
-  else {
-    images = [{ original: `${mobile}` }];
-  }
-
-  //to show category item
-  let cat = [];
-  if (oneCategory.data) cat = oneCategory.data;
-  else cat = [];
-
-  //to show brand item
-  let brand = [];
-  if (oneBrand.data) brand = oneBrand.data;
-  else brand = [];
-
-  let prod = [];
-  if (productLike) prod = productLike.data;
-  else prod = [];
-
-  return [item, images, cat, brand, prod];
+  // إرجاع البيانات بعد تحميلها
+  return [item, images, cat, brand, prod, loading];
 };
 
 export default ViewProductsDetalisHook;

@@ -18,6 +18,8 @@ const ProductDetalisPage = () => {
     var rateQty = item.ratingsQuantity;
   }
 
+  console.log("Product Details:", item);
+
   return (
     <div style={{ minHeight: "670px" }}>
       <CategoryHeader />

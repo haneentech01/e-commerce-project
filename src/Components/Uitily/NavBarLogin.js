@@ -11,6 +11,7 @@ import login from "../../Assets/images/login.png";
 import logo from "../../Assets/images/logo.png";
 import cart from "../../Assets/images/cart.png";
 import NavbarSearchHook from "../../hook/search/navbar-search-hook";
+import GetAllUserCartHook from "../../hook/cart/get-all-user-cart-hook";
 
 const NavBarLogin = () => {
   const [OnChangeSearch, searchWord] = NavbarSearchHook();
@@ -30,6 +31,8 @@ const NavBarLogin = () => {
     localStorage.removeItem("token");
     setUser("");
   };
+
+  const [itemsNum, cartItems] = GetAllUserCartHook();
 
   return (
     <Navbar className="sticky-top" bg="dark" variant="dark" expand="sm">
@@ -86,10 +89,13 @@ const NavBarLogin = () => {
             )}
             <Nav.Link
               href="/cart"
-              className="nav-text d-flex mt-3 justify-content-center"
-              style={{ color: "white" }}
+              className="position-relative nav-text d-flex mt-3 justify-content-center"
+              style={{ color: "white", position: "relative" }}
             >
               <img src={cart} className="login-img" alt="sfvs" />
+              <span class="position-absolute top-10 start-0 translate-middle badge rounded-pill bg-danger">
+                {itemsNum || 0}
+              </span>
               <p style={{ color: "white" }}>العربة</p>
             </Nav.Link>
           </Nav>

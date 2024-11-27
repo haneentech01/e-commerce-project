@@ -1,25 +1,23 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
+import AddRateHook from "../../hook/review/add-rate-hook";
 import { ToastContainer } from "react-toastify";
 import { useParams } from "react-router-dom";
-import AddRateHook from "../../hook/review/add-rate-hook";
 
 const RatePost = () => {
   const { id } = useParams();
   const [
-    onChangeRateText,
-    onChangeRateValue,
+    OnChangeRateText,
+    OnChangeRateValue,
     rateText,
     rateValue,
     user,
     onSubmit,
   ] = AddRateHook(id);
 
-  let name = "";
-  if (user) {
-    name = user.name;
-  }
+  var name = "";
+  if (user) name = user.name;
 
   const setting = {
     size: 20,
@@ -33,7 +31,7 @@ const RatePost = () => {
     halfIcon: <i className="fa fa-star-half-alt" />,
     filledIcon: <i className="fa fa-star" />,
     onChange: (newValue) => {
-      onChangeRateValue(newValue);
+      OnChangeRateValue(newValue);
     },
   };
 
@@ -45,19 +43,18 @@ const RatePost = () => {
           <ReactStars {...setting} />
         </Col>
       </Row>
-
+      
       <Row className="border-bottom mx-2">
         <Col className="d-felx me-4 pb-2">
           <textarea
             value={rateText}
-            onChange={onChangeRateText}
+            onChange={OnChangeRateText}
             className="input-form-area p-2 mt-3"
             rows="2"
             cols="20"
             placeholder="اكتب تعليقك...."
           />
-
-          <div className="d-flex justify-content-end al">
+          <div className=" d-flex justify-content-end al">
             <div
               onClick={onSubmit}
               className="product-cart-add px-3  py-2 text-center d-inline"

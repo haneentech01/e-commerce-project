@@ -1,27 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import notify from "../useNotifaction";
-import { deleteReviewOnProduct } from "../../redux/actions/reviewAction";
+import { deleteReviewOnProduct } from "./../../redux/actions/reviewAction";
 
 const DeleteRateHook = (review) => {
   const dispatch = useDispatch();
   const [isUser, setIsUser] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [showDelete, setShowDelete] = useState(false);
 
-  const handleClose = () => {
-    setShowDelete(false);
-  };
-
-  const handleShow = () => {
-    setShowDelete(true);
-  };
+  const handleClose = () => setShowDelete(false);
+  const handleShow = () => setShowDelete(true);
 
   let user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
-    if (review.user._id === user._id) {
-      setIsUser(true);
-    }
+    try {
+      if (review.user._id === user._id) {
+        setIsUser(true);
+      }
+    } catch (e) {}
   }, []);
 
   const handelDelete = async () => {
@@ -30,7 +29,6 @@ const DeleteRateHook = (review) => {
     setLoading(false);
     handleClose();
   };
-
   const res = useSelector((state) => state.reviewReducer.deleteReview);
 
   useEffect(() => {
@@ -40,7 +38,7 @@ const DeleteRateHook = (review) => {
         setTimeout(() => {
           window.location.reload(false);
         }, 1000);
-      } else notify("هناك مشكلة فى عملية المسح", "error");
+      } else notify("هناك مشكله فى عملية المسح", "error");
     }
   }, [loading]);
 

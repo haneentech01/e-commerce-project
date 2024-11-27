@@ -1,10 +1,9 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Modal, Button } from "react-bootstrap";
 import rate from "../../Assets/images/rate.png";
 import deleteicon from "../../Assets/images/delete.png";
 import editicon from "../../Assets/images/edit.png";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
+import { ToastContainer } from "react-toastify";
 import DeleteRateHook from "../../hook/review/delete-rate-hook";
 import EditRateHook from "../../hook/review/edit-rate-hook";
 import ReactStars from "react-rating-stars-component";
@@ -19,7 +18,7 @@ const RateItem = ({ review }) => {
     handelEdit,
     onChangeRateText,
     newRateText,
-    onChangeRateValue,
+    OnChangeRateValue,
     newRateValue,
   ] = EditRateHook(review);
 
@@ -35,27 +34,27 @@ const RateItem = ({ review }) => {
     halfIcon: <i className="fa fa-star-half-alt" />,
     filledIcon: <i className="fa fa-star" />,
     onChange: (newValue) => {
-      onChangeRateValue(newValue);
+      OnChangeRateValue(newValue);
     },
   };
 
   return (
     <div>
       <Modal show={showDelete} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>
             <div className="font">تاكيد الحذف</div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="font">هل انت متأكد من حذف التقييم</div>
+          <div className="font">هل انتا متاكد من حذف التقييم</div>
         </Modal.Body>
         <Modal.Footer>
           <Button className="font" variant="success" onClick={handleClose}>
-            cancel
+            تراجع
           </Button>
           <Button className="font" variant="dark" onClick={handelDelete}>
-            Delete
+            حذف
           </Button>
         </Modal.Footer>
       </Modal>
@@ -78,26 +77,25 @@ const RateItem = ({ review }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button className="font" variant="success" onClick={handleCloseEdit}>
-            cancel
+            تراجع
           </Button>
           <Button className="font" variant="dark" onClick={handelEdit}>
-            Edite
+            تعديل
           </Button>
         </Modal.Footer>
       </Modal>
 
       <Row className="mt-3">
         <Col className="d-felx me-5">
-          <div className="rate-name  d-inline ms-2"> {review.user.name} </div>
+          <div className="rate-name  d-inline ms-2">{review.user.name}</div>
           <img className="" src={rate} alt="" height="16px" width="16px" />
-          <div className="cat-rate  d-inline  p-1 pt-2"> {review.rating} </div>
+          <div className="cat-rate  d-inline  p-1 pt-2">{review.rating}</div>
         </Col>
       </Row>
 
       <Row className="border-bottom mx-2">
         <Col className="d-felx me-4 pb-2">
-          <div className="rate-description d-inline ms-2">{review.review}</div>
-
+          <div className="rate-description  d-inline ms-2">{review.review}</div>
           {isUser === true ? (
             <div className="d-inline d-flex justify-content-end">
               <img
@@ -121,6 +119,7 @@ const RateItem = ({ review }) => {
           ) : null}
         </Col>
       </Row>
+      <ToastContainer />
     </div>
   );
 };

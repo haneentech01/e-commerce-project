@@ -8,10 +8,13 @@ import ViewProductsDetalisHook from "./../../hook/products/view-products-detalis
 
 const ProductGallery = () => {
   const { id } = useParams();
-  const [item, images, cat, brand, prod] = ViewProductsDetalisHook(id);
+  const [item, images, cat, brand] = ViewProductsDetalisHook(id);
 
   return (
-    <div className="product-gallary-card d-flex justfiy-content-center align-items-center pt-2">
+    <div
+      className="product-gallary-card d-flex justfiy-content-center  align-items-center
+        pt-2"
+    >
       <ImageGallery
         items={images}
         showFullscreenButton={false}

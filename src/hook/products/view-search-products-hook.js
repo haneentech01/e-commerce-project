@@ -103,7 +103,7 @@ const ViewSearchProductsHook = () => {
     sortData();
     await dispatch(
       getAllProductsSearch(
-        `sort=${sort}&limit=${limit}&page=${page}&keyword=${word}&${queryCat}&${brandCat}`
+        `sort=${sort}&limit=${limit}&page=${page}&keyword=${word}&${queryCat}&${brandCat}${pricefromString}${priceToString}`
       )
     );
   };

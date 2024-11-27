@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import notify from "./../../hook/useNotifaction";
-import { createReview } from "../../redux/actions/reviewAction";
+import notify from "../useNotifaction";
+import { createReview } from "./../../redux/actions/reviewAction";
 
 const AddRateHook = (id) => {
   const dispatch = useDispatch();
@@ -9,19 +9,17 @@ const AddRateHook = (id) => {
   const [rateValue, setRateValue] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const onChangeRateText = (e) => {
+  const OnChangeRateText = (e) => {
     setRateText(e.target.value);
   };
-
-  const onChangeRateValue = (e) => {
-    setRateValue(e.target.value);
+  const OnChangeRateValue = (val) => {
+    setRateValue(val);
   };
-
-  let user = "";
-  if (localStorage.getItem("user") != null) {
+  var user = "";
+  if (localStorage.getItem("user") != null)
     user = JSON.parse(localStorage.getItem("user"));
-  }
 
+  ///when save rate
   const onSubmit = async () => {
     if (rateText === "") {
       notify("من فضلك اكتب تعليق", "error");
@@ -61,8 +59,8 @@ const AddRateHook = (id) => {
   }, [loading]);
 
   return [
-    onChangeRateText,
-    onChangeRateValue,
+    OnChangeRateText,
+    OnChangeRateValue,
     rateText,
     rateValue,
     user,

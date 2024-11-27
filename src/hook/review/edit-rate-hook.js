@@ -1,33 +1,35 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateReviewOnProduct } from "../../redux/actions/reviewAction";
+import { useNavigate } from "react-router-dom";
 import notify from "../useNotifaction";
+import { updateReviewOnProduct } from "./../../redux/actions/reviewAction";
 
 const EditRateHook = (review) => {
   const dispatch = useDispatch();
-  const [showEdit, setShowEdit] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [newRateText, setNewRateText] = useState(review.review);
   const [newRateValue, setNewRateValue] = useState(review.rating);
-  const [loading, setLoading] = useState(true);
+  const [showEdit, setShowEdit] = useState(false);
 
   const handleCloseEdit = () => setShowEdit(false);
-
-  const handelEdit = () => setShowEdit(true);
+  const handleShowEdit = () => setShowEdit(true);
 
   const onChangeRateText = (e) => {
     setNewRateText(e.target.value);
   };
 
-  const onChangeRateValue = (val) => {
+  const OnChangeRateValue = (val) => {
     setNewRateValue(val);
   };
 
-  const handleShowEdit = async () => {
+  const handelEdit = async () => {
     setLoading(true);
-    await dispatch(updateReviewOnProduct(review._id), {
-      review: newRateText,
-      rating: newRateValue,
-    });
+    await dispatch(
+      updateReviewOnProduct(review._id, {
+        review: newRateText,
+        rating: newRateValue,
+      })
+    );
     setLoading(false);
     handleCloseEdit();
   };
@@ -36,14 +38,13 @@ const EditRateHook = (review) => {
 
   useEffect(() => {
     if (loading === false) {
+      console.log(res);
       if (res.status && res.status === 200) {
         notify("تم تعديل التقييم بنجاح", "success");
         setTimeout(() => {
           window.location.reload(false);
         }, 1000);
-      } else {
-        notify("هناك مشكلة فى عملية التعديل", "error");
-      }
+      } else notify("هناك مشكله فى عملية التعديل", "error");
     }
   }, [loading]);
 
@@ -54,7 +55,7 @@ const EditRateHook = (review) => {
     handelEdit,
     onChangeRateText,
     newRateText,
-    onChangeRateValue,
+    OnChangeRateValue,
     newRateValue,
   ];
 };

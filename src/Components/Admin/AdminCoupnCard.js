@@ -1,25 +1,28 @@
 import React from "react";
-import { Row, Col, Button, Modal } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Button, Col, Modal, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import deleteicon from "../../Assets/images/delete.png";
-import DeleteAddressHook from "../../hook/user/delete-address-hook";
+import editicon from "../../Assets/images/edit.png";
+import CouponCardHook from "../../hook/coupon/coupon-card-hook";
 
-const UserAddressCard = ({ item }) => {
-  const [show, handleClose, handleShow, handelDelete] = DeleteAddressHook(
-    item._id
-  );
+const AdminCoupnCard = ({ coupon }) => {
+  const [dateString, formatDate, show, handleClose, handleShow, handelDelete] =
+    CouponCardHook(coupon);
 
   return (
     <div className="user-address-card my-3 px-2">
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>
+            {" "}
             <div className="font">تاكيد الحذف</div>
           </Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
-          <div className="font">هل انتا متاكد من عملية الحذف العنوان</div>
+          <div className="font">هل انت متاكد من عملية الحذف للكوبون</div>
         </Modal.Body>
+
         <Modal.Footer>
           <Button className="font" variant="success" onClick={handleClose}>
             تراجع
@@ -31,27 +34,27 @@ const UserAddressCard = ({ item }) => {
       </Modal>
 
       <Row className="d-flex justify-content-between  ">
-        <Col xs="1">
-          <div className="p-2"> {item.alias} </div>
+        <Col xs="6">
+          <div className="p-2">اسم الكوبون: {coupon.name}</div>
         </Col>
 
-        <Col xs="4" className="d-flex d-flex justify-content-end">
+        <Col xs="6" className="d-flex d-flex justify-content-end">
           <div className="d-flex p-2">
-            <div className="d-flex mx-2">
-              <img
-                alt=""
-                className="ms-1 mt-2"
-                src={deleteicon}
-                height="17px"
-                width="15px"
-              />
-              <Link
-                to={`/user/edit-address/${item._id}`}
-                style={{ textDecoration: "none" }}
-              >
-                <p className="item-delete-edit"> تعديل </p>
-              </Link>
-            </div>
+            <Link
+              to={`/admin/editcoupon/${coupon._id}`}
+              style={{ textDecoration: "none" }}
+            >
+              <div className="d-flex mx-2">
+                <img
+                  alt=""
+                  className="ms-1 mt-2"
+                  src={editicon}
+                  height="17px"
+                  width="15px"
+                />
+                <p className="item-delete-edit"> تعديل</p>
+              </div>
+            </Link>
 
             <div onClick={handleShow} className="d-flex ">
               <img
@@ -73,10 +76,10 @@ const UserAddressCard = ({ item }) => {
             style={{
               color: "#555550",
               fontFamily: "Almarai",
-              fontSize: "14px",
+              fontSize: "16px",
             }}
           >
-            {item.details}
+            تاريخ الانتهاء: {formatDate(dateString)}
           </div>
         </Col>
       </Row>
@@ -90,7 +93,7 @@ const UserAddressCard = ({ item }) => {
               fontSize: "16px",
             }}
           >
-            رقم الهاتف:
+            نسبة الخصم :
           </div>
 
           <div
@@ -101,7 +104,7 @@ const UserAddressCard = ({ item }) => {
             }}
             className="mx-2"
           >
-            {item.phone}
+            {coupon.discount}%
           </div>
         </Col>
       </Row>
@@ -109,4 +112,4 @@ const UserAddressCard = ({ item }) => {
   );
 };
 
-export default UserAddressCard;
+export default AdminCoupnCard;
