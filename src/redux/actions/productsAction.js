@@ -6,6 +6,7 @@ import {
   CREATE_PRODUCTS,
   DELETE_PRODUCTS,
   GET_ALL_PRODUCTS,
+  GET_ALL_PRODUCTS_CATEGORY,
   GET_ERROR,
   GET_PRODUCT_DETALIS,
   GET_PRODUCT_LIKE,
@@ -80,7 +81,6 @@ export const getAllProductsSearch = (queryString) => async (dispatch) => {
     });
   }
 };
-
 // Get One Product With Id
 export const getOneProduct = (id) => async (dispatch) => {
   try {
@@ -151,3 +151,24 @@ export const updateProducts = (id, data) => async (dispatch) => {
     });
   }
 };
+
+//Get All Products By Category
+export const getAllProductsByCategory =
+  (page, limit, categoryID) => async (dispatch) => {
+    try {
+      const response = await useGetData(
+        `/api/v1/products?limit=${limit}&category=${categoryID}&page=${page}`
+      );
+      console.log(response);
+      dispatch({
+        type: GET_ALL_PRODUCTS_CATEGORY,
+        payload: response,
+        loading: true,
+      });
+    } catch (e) {
+      dispatch({
+        type: GET_ALL_PRODUCTS_CATEGORY,
+        payload: e.response,
+      });
+    }
+  };

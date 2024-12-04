@@ -25,7 +25,6 @@ const GetAllUserCartHook = () => {
 
   useEffect(() => {
     if (loading === false) {
-      console.log(res);
       if (res && res.status === "success") {
         setItemsNum(res.numOfCartItems);
         setCartItems(res.data.products);

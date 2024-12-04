@@ -52,8 +52,6 @@ const ViewSearchProductsHook = () => {
       )
     );
   };
-
-  // Fetch all products when the component mounts
   useEffect(() => {
     getProduct();
   }, []);
