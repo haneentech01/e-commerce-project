@@ -1,5 +1,10 @@
-import React from 'react'
-import { ADD_USER_ADDRESS, DELETE_USER_ADDRESS, EDIT_USER_ADDRESS, GET_ALL_USER_ADDRESS, GET_ONE_USER_ADDRESS } from '../type';
+import {
+  ADD_USER_ADDRESS,
+  EDIT_USER_ADDRESS,
+  GET_ONE_USER_ADDRESS,
+  DELETE_USER_ADDRESS,
+  GET_ALL_USER_ADDRESS,
+} from "../type";
 
 const inital = {
   addUserAddress: [],
@@ -45,5 +50,4 @@ const userAddressesReducer = (state = inital, action) => {
       return state;
   }
 };
-
-export default userAddressesReducer
+export default userAddressesReducer;

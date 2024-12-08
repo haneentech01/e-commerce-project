@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Modal, Button } from "react-bootstrap";
-import deleteicon from "../../Assets/images/delete.png";
+import deleteicon from "../../images/delete.png";
 import ProfileHook from "../../hook/user/profile-hook";
 import { ToastContainer } from "react-toastify";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Button, Modal } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import deleteicon from "../../Assets/images/delete.png";
+import deleteicon from "../../images/delete.png";
 import DeleteAddressHook from "../../hook/user/delete-address-hook";
 
 const UserAddressCard = ({ item }) => {

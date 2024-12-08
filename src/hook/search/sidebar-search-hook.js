@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getAllCategory } from "../../redux/actions/categoryAction";
-import { getAllBrand } from "../../redux/actions/brandAction";
+import { getAllBrand } from "./../../redux/actions/brandAction";
 import ViewSearchProductsHook from "./../products/view-search-products-hook";
 
 const SidebarSearchHook = () => {
   const [items, pagination, onPress, getProduct, results] =
     ViewSearchProductsHook();
-
   const dispatch = useDispatch();
 
   //when first load
@@ -20,26 +19,22 @@ const SidebarSearchHook = () => {
   }, []);
 
   //to get state from redux
-  const allCategory = useSelector((state) => state.allCategory.category);
+  const allCat = useSelector((state) => state.allCategory.category);
   //to get state from redux
   const allBrand = useSelector((state) => state.allBrand.brand);
 
   //to get category
   let category = [];
   try {
-    if (allCategory.data) {
-      category = allCategory.data;
-    }
+    if (allCat.data) category = allCat.data;
   } catch (e) {}
-
-  //to get Brand
+  //to get category
   let brand = [];
   try {
-    if (allBrand.data) {
-      brand = allBrand.data;
-    }
+    if (allBrand.data) brand = allBrand.data;
   } catch (e) {}
-
+  var queryCat = "",
+    queryBrand = "";
   const [catChecked, setCatChecked] = useState([]);
   //when user press any category
   const clickCategory = (e) => {
@@ -50,14 +45,13 @@ const SidebarSearchHook = () => {
       if (e.target.checked === true) {
         setCatChecked([...catChecked, value]);
       } else if (e.target.checked === false) {
-        const newArray = catChecked.filter((e) => e !== value);
-        setCatChecked(newArray);
+        const newArry = catChecked.filter((e) => e !== value);
+        setCatChecked(newArry);
       }
     }
   };
-
   useEffect(() => {
-    const queryCat = catChecked.map((val) => "category[in][]=" + val).join("&");
+    queryCat = catChecked.map((val) => "category[in][]=" + val).join("&");
     localStorage.setItem("catCecked", queryCat);
     setTimeout(() => {
       getProduct();
@@ -65,7 +59,7 @@ const SidebarSearchHook = () => {
   }, [catChecked]);
 
   const [brandChecked, setBrandChecked] = useState([]);
-  //when user press any brand
+  //when user press any category
   const clickBrand = (e) => {
     let value = e.target.value;
     if (value === "0") {
@@ -74,16 +68,14 @@ const SidebarSearchHook = () => {
       if (e.target.checked === true) {
         setBrandChecked([...brandChecked, value]);
       } else if (e.target.checked === false) {
-        const newArray = brandChecked.filter((e) => e !== value);
-        setBrandChecked(newArray);
+        const newArry = brandChecked.filter((e) => e !== value);
+        setBrandChecked(newArry);
       }
     }
   };
 
   useEffect(() => {
-    const queryBrand = brandChecked
-      .map((val) => "brand[in][]=" + val)
-      .join("&");
+    queryBrand = brandChecked.map((val) => "brand[in][]=" + val).join("&");
     localStorage.setItem("brandCecked", queryBrand);
     setTimeout(() => {
       getProduct();
@@ -95,9 +87,9 @@ const SidebarSearchHook = () => {
 
   const priceFrom = (e) => {
     localStorage.setItem("priceFrom", e.target.value);
+
     setPriceFrom(e.target.value);
   };
-
   const priceTo = (e) => {
     localStorage.setItem("priceTo", e.target.value);
     setToFrom(e.target.value);

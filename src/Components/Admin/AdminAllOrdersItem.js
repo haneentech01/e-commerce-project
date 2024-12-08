@@ -1,57 +1,88 @@
-import React from 'react'
-import { Col, Row } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import mobile from '../../Assets/images/mobile.png'
+import React from "react";
+import { Col, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-const AdminAllOrdersItem = () => {
-    return (
-        <Col sm="12">
-            <Link to="/admin/orders/23" className="cart-item-body my-2 px-1 d-flex"style={{ textDecoration: "none" }}>
-                <img width="160px" height="197px" src={mobile} alt="" />
-                <div className="w-100">
-                    <Row className="justify-content-between">
-                        <Col sm="12" className=" d-flex flex-row justify-content-between">
-                            <div className="d-inline pt-2 cat-text">طلب رقم #2321</div>
-                            <div className="d-inline pt-2 cat-text">ازالة</div>
-                        </Col>
-                    </Row>
-                    <Row className="justify-content-center mt-2">
-                        <Col sm="12" className=" d-flex flex-row justify-content-start">
-                            <div className="d-inline pt-2 cat-title">
-                                آيفون XR بذاكرة سعة 128 جيجابايت ويدعم تقنية 4G LTE مع تطبيق فيس
-                                تايم (برودكت) أحمر
-                            </div>
-                            <div className="d-inline pt-2 cat-rate me-2">4.5</div>
-                        </Col>
-                    </Row>
+const AdminAllOrdersItem = ({ orderItem }) => {
+  console.log(orderItem);
+  return (
+    <Col sm="12">
+      <Link
+        to={`/admin/orders/${orderItem._id}`}
+        className="cart-item-body-admin my-2 px-1 d-flex px-2"
+        style={{ textDecoration: "none" }}
+      >
+        <div className="w-100">
+          <Row className="justify-content-between">
+            <Col sm="12" className=" d-flex flex-row justify-content-between">
+              <div className="d-inline pt-2 cat-text">
+                طلب رقم: {orderItem.order_id}
+              </div>
+            </Col>
+          </Row>
 
-                    <Row>
-                        <Col sm="12" className=" d-flex">
-                            <div className="mt-2  cat-text d-inline">الماركة :</div>
-                            <div className="mt-1 barnd-text d-inline mx-1">ابل </div>
-                            <div
-                                className="color  me-1 border"
-                                style={{ backgroundColor: "#6f42c1" }}></div>
-                        </Col>
-                    </Row>
+          <Row className="d-flex justify-content-center">
+            <Col sm="12" className="d-flex flex-column justify-content-start">
+              <div
+                className="d-inline cat-title"
+                style={{ fontWeight: "bold" }}
+              >
+                طلب من .. ({orderItem.user.name || ""})
+              </div>
+              <div
+                style={{ color: "black" }}
+                className="d-inline pt-2 cat-rate "
+              >
+                {orderItem.user.email || ""}
+              </div>
+            </Col>
+          </Row>
 
-                    <Row className="justify-content-between">
-                        <Col sm="12" className=" d-flex flex-row justify-content-between">
-                            <div className="d-inline pt-2 d-flex">
-                                <div className="cat-text pt-1 d-inline">الكمية</div>
-                                <input
-                                    className="mx-2 mt-1"
-                                    type="number"
-                                    style={{ width: "40px", height: "25px" }}
-                                />
-                            </div>
-                            <div className="d-inline pt-2 barnd-text">٣٠٠٠ جنية</div>
-                        </Col>
-                    </Row>
+          <Row className="d-flex justify-content-between">
+            <Col xs="6" className="d-flex mt-1">
+              <div>
+                <div style={{ color: "black" }} className="d-inline">
+                  التوصيل:
                 </div>
-            </Link>
-        </Col>
-    )
-}
+                <div className="d-inline me-1 stat">
+                  {orderItem.isDelivered === true
+                    ? "تم التوصيل"
+                    : " لم يتم التوصيل "}
+                </div>
+              </div>
 
-export default AdminAllOrdersItem
+              <div>
+                <div style={{ color: "black" }} className="d-inline me-3">
+                  ، الدفع:
+                </div>
+                <div className="d-inline stat me-2">
+                  {orderItem.isPaid === true ? "تم الدفع" : "لم يتم الدفع "}
+                </div>
+              </div>
+
+              <div>
+                <div style={{ color: "black" }} className="d-inline me-3">
+                  ، طرقة الدفع:
+                </div>
+                <div className="d-inline stat me-2">
+                  {orderItem.paymentMethodType === "cash"
+                    ? "كاش"
+                    : "بطاقة ائتمانية"}
+                </div>
+              </div>
+            </Col>
+            
+            <Col xs="6" className="d-flex justify-content-end">
+              <div>
+                <div className="barnd-text">
+                  {orderItem.totalOrderPrice || 0} جنية
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </Link>
+    </Col>
+  );
+};
+
+export default AdminAllOrdersItem;

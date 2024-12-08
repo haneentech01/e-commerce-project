@@ -7,9 +7,9 @@ import {
   Nav,
   NavDropdown,
 } from "react-bootstrap";
-import login from "../../Assets/images/login.png";
-import logo from "../../Assets/images/logo.png";
-import cart from "../../Assets/images/cart.png";
+import login from "../../images/login.png";
+import logo from "../../images/logo.png";
+import cart from "../../images/cart.png";
 import NavbarSearchHook from "../../hook/search/navbar-search-hook";
 import GetAllUserCartHook from "../../hook/cart/get-all-user-cart-hook";
 

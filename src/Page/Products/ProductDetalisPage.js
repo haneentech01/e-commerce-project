@@ -18,7 +18,7 @@ const ProductDetalisPage = () => {
     var rateQty = item.ratingsQuantity;
   }
 
-  console.log("Product Details:", item);
+  // console.log("Product Details:", item);
 
   return (
     <div style={{ minHeight: "670px" }}>

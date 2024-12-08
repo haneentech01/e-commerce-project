@@ -1,38 +1,35 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts, getAllProductsPage } from '../../redux/actions/productsAction';
+import { useDispatch, useSelector } from "react-redux";
+import { getAllProducts } from '../../redux/actions/productsAction';
+import { getAllProductsPage } from './../../redux/actions/productsAction';
 
-const useViewProductAdminHook = () => {
+const ViewProductAdminHook = () => {
+
     const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(getAllProducts(8));
+        dispatch(getAllProducts(8))
     }, [])
 
-    const onPress = async(page) => {
-        await dispatch(getAllProductsPage(page , 8))
+
+    const onPress = async (page) => {
+        await dispatch(getAllProductsPage(page, 8))
     }
-
-    const allProducts = useSelector((state) => state.allProducts.allProducts);
-    let items = [];
-    let pagination = [];
-
+    let items = []; let pagination = [];
+    const allProducts = useSelector((state) => state.allproducts.allProducts)
     try {
-        if (allProducts.data) {
-            items = allProducts.data;
-        } else {
-            items = [];
-        }
 
-        if (allProducts.paginationResult) {
+        if (allProducts.data)
+            items = allProducts.data;
+        else
+            items = []
+
+        if (allProducts.paginationResult)
             pagination = allProducts.paginationResult.numberOfPages;
-        } else {
-            pagination = [];
-        }
-    }
-    catch (e) { }
-    
-    return [items , pagination , onPress]
+        else
+            pagination = []
+    } catch (e) { }
+    return [items, pagination, onPress]
+
 }
 
-export default useViewProductAdminHook
+export default ViewProductAdminHook

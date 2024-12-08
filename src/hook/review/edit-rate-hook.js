@@ -1,63 +1,56 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import notify from "../useNotifaction";
-import { updateReviewOnProduct } from "./../../redux/actions/reviewAction";
-
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { createNewUser, forgetPassword, loginUser } from '../../redux/actions/authAction';
+import { useNavigate } from 'react-router-dom'
+import notify from '../useNotifaction';
+import { createReview, deleteReviewOnProduct, updateReviewOnProduct } from './../../redux/actions/reviewAction';
 const EditRateHook = (review) => {
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-  const [newRateText, setNewRateText] = useState(review.review);
-  const [newRateValue, setNewRateValue] = useState(review.rating);
-  const [showEdit, setShowEdit] = useState(false);
+    const dispatch = useDispatch();
 
-  const handleCloseEdit = () => setShowEdit(false);
-  const handleShowEdit = () => setShowEdit(true);
+    const [loading, setLoading] = useState(true)
 
-  const onChangeRateText = (e) => {
-    setNewRateText(e.target.value);
-  };
+    const [newRateText, setNewRateText] = useState(review.review);
+    const [newRateValue, setNewRateValue] = useState(review.rating);
 
-  const OnChangeRateValue = (val) => {
-    setNewRateValue(val);
-  };
+    const [showEdit, setShowEdit] = useState(false);
+    const handleCloseEdit = () => setShowEdit(false);
+    const handleShowEdit = () => setShowEdit(true);
 
-  const handelEdit = async () => {
-    setLoading(true);
-    await dispatch(
-      updateReviewOnProduct(review._id, {
-        review: newRateText,
-        rating: newRateValue,
-      })
-    );
-    setLoading(false);
-    handleCloseEdit();
-  };
-
-  const res = useSelector((state) => state.reviewReducer.updateReview);
-
-  useEffect(() => {
-    if (loading === false) {
-      console.log(res);
-      if (res.status && res.status === 200) {
-        notify("تم تعديل التقييم بنجاح", "success");
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 1000);
-      } else notify("هناك مشكله فى عملية التعديل", "error");
+    const onChangeRateText = (e) => {
+        setNewRateText(e.target.value)
     }
-  }, [loading]);
+    const OnChangeRateValue = (val) => {
+        setNewRateValue(val)
+    }
 
-  return [
-    showEdit,
-    handleCloseEdit,
-    handleShowEdit,
-    handelEdit,
-    onChangeRateText,
-    newRateText,
-    OnChangeRateValue,
-    newRateValue,
-  ];
-};
+    const handelEdit = async () => {
+        setLoading(true)
+        await dispatch(updateReviewOnProduct(review._id, {
+            review: newRateText,
+            rating: newRateValue
+        }))
+        setLoading(false)
+        handleCloseEdit();
+    }
+    const res = useSelector(state => state.reviewReducer.updateReview)
 
-export default EditRateHook;
+    useEffect(() => {
+        if (loading === false) {
+            console.log(res)
+            if (res.status && res.status === 200) {
+                notify("تم تعديل التقييم بنجاح", "success")
+                setTimeout(() => {
+                    window.location.reload(false)
+                }, 1000);
+            }
+            else
+                notify("هناك مشكله فى عملية التعديل", "error")
+        }
+    }, [loading])
+
+    return [showEdit, handleCloseEdit, handleShowEdit, handelEdit, onChangeRateText, newRateText, OnChangeRateValue, newRateValue]
+
+}
+
+
+export default EditRateHook

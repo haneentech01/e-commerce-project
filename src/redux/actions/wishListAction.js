@@ -1,7 +1,7 @@
-import useDeleteData from "../../hooks/useDeleteData";
+import { useGetDataToken } from "../../hooks/useGetData";
 import { useInsertData } from "../../hooks/useInsertData";
-import { useGetDataToken} from '../../hooks/useGetData'
 import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, USER_WISHLIST } from "../type";
+import useDeleteData from "./../../hooks/useDeleteData";
 
 //add product to wishlist
 export const addProductToWishList = (body) => async (dispatch) => {
@@ -36,7 +36,7 @@ export const removeProductToWishList = (prodID) => async (dispatch) => {
   }
 };
 
-//get wishlist product 
+//get wishlist product
 export const getProductWishList = () => async (dispatch) => {
   try {
     const response = await useGetDataToken(`/api/v1/wishlist`);

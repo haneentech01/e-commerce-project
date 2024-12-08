@@ -1,21 +1,21 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllBrand } from '../../redux/actions/brandAction';
+import React, { useEffect } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllBrand } from '../../redux/actions/brandAction'
 
 const HomeBrandHook = () => {
+
     const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(getAllBrand())
-    })
-    
-    //Get Last Brand State From Redux
-    const brand = useSelector(state => state.allBrand.brand);
+        dispatch(getAllBrand());
+    }, [])
+    //get last brand state from redux
+    const brand = useSelector(state => state.allBrand.brand)
+    //get last loading state from redux
+    const loading = useSelector(state => state.allBrand.loading)
+   
 
-    //Get Last Loading State From Redux
-    const loading = useSelector(state => state.allBrand.loading);
+    return [brand, loading]
+};
 
-    return [brand, loading];
-}
-
-export default HomeBrandHook
+export default HomeBrandHook;

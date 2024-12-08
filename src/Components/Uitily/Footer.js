@@ -1,9 +1,9 @@
 import React from 'react'
 import { Container, Col ,Row} from "react-bootstrap";
-import facebook from "../../Assets/images/facebook.png";
-import instagram from "../../Assets/images/instagram.png";
-import twitter from "../../Assets/images/twitter.png";
-import phone from "../../Assets/images/phone.png";
+import facebook from "../../images/facebook.png";
+import instagram from "../../images/instagram.png";
+import twitter from "../../images/twitter.png";
+import phone from "../../images/phone.png";
 
 const Footer = () => {
     return (

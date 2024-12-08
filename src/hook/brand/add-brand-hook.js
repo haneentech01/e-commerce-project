@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { createBrand } from '../../redux/actions/brandAction'
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import notify from '../../hook/useNotifaction'
-import avatar from '../../Assets/images/avatar.png';
+import avatar from '../../images/avatar.png'
 
 const AddBrandHook = () => {
+ 
     const dispatch = useDispatch();
-
-    const [img, setImg] = useState(avatar);
-    const [name, setName] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [isPress, setIsPress] = useState(false);
+    const [img, setImg] = useState(avatar)
+    const [name, setName] = useState('')
+    const [selectedFile, setSelectedFile] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [isPress, setIsPress] = useState(false)
 
     //to change name state
     const onChangeName = (event) => {
@@ -48,15 +49,14 @@ const AddBrandHook = () => {
 
     useEffect(() => {
         if (loading === false) {
-            setImg(avatar);
-            setName("");
-            setSelectedFile(null);
-            console.log('تم الانتهاء');
-            setLoading(true);
-            setTimeout(() => setIsPress(false), 1000);
+            setImg(avatar)
+            setName("")
+            setSelectedFile(null)
+            console.log('تم الانتهاء')
+            setLoading(true)
+            setTimeout(() => setIsPress(false), 1000)
 
-            console.log('Response:', res);
-            if (res && res.status === 201) {
+            if (res.status === 201) {
                 notify('تمت عملية الاضافة بنجاح', "success");
             }
             else {
@@ -65,7 +65,7 @@ const AddBrandHook = () => {
         }
     }, [loading])
 
-    return [img, name, loading, isPress, handelSubmit, onImageChange, onChangeName];
+    return [img, name, loading, isPress, handelSubmit, onImageChange, onChangeName]
 };
 
 export default AddBrandHook

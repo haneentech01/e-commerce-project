@@ -1,5 +1,4 @@
-import React from "react";
-import { ADD_TO_WISHLIST, REMOVE_FROM_WISHLIST, USER_WISHLIST } from "../type";
+import { ADD_TO_WISHLIST, USER_WISHLIST, REMOVE_FROM_WISHLIST } from "../type";
 
 const inital = {
   addWishList: [],
@@ -31,5 +30,4 @@ const addToWishListReducer = (state = inital, action) => {
       return state;
   }
 };
-
 export default addToWishListReducer;

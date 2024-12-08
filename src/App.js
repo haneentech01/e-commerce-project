@@ -1,7 +1,7 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Footer from "./Components/Uitily/Footer";
-import NavBarLogin from "./Components/Uitily/NavBarLogin";
 import HomePage from "./Page/Home/HomePage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBarLogin from "./Components/Uitily/NavBarLogin";
+import Footer from "./Components/Uitily/Footer";
 import LoginPage from "./Page/Auth/LoginPage";
 import RegisterPage from "./Page/Auth/RegisterPage";
 import AllCategoryPage from "./Page/Category/AllCategoryPage";
@@ -10,7 +10,7 @@ import ShopProductsPage from "./Page/Products/ShopProductsPage";
 import ProductDetalisPage from "./Page/Products/ProductDetalisPage";
 import CartPage from "./Page/Cart/CartPage";
 import ChoosePayMethoudPage from "./Page/Checkout/ChoosePayMethoudPage";
-import AdminAddProducts from "./Page/Admin/AdminAllProductsPage";
+import AdminAllProductsPage from "./Page/Admin/AdminAllProductsPage";
 import AdminAllOrdersPage from "./Page/Admin/AdminAllOrdersPage";
 import AdminOrderDetalisPage from "./Page/Admin/AdminOrderDetalisPage";
 import AdminAddBrandPage from "./Page/Admin/AdminAddBrandPage";
@@ -18,37 +18,38 @@ import AdminAddCategoryPage from "./Page/Admin/AdminAddCategoryPage";
 import AdminAddSubCategoryPage from "./Page/Admin/AdminAddSubCategoryPage";
 import AdminAddProductsPage from "./Page/Admin/AdminAddProductsPage";
 import UserAllOrdersPage from "./Page/User/UserAllOrdersPage";
+import UserFavoriteProductsPage from "./Page/User/UserFavoriteProductPage";
 import UserAllAddresPage from "./Page/User/UserAllAddresPage";
-import UserProfilePage from "./Page/User/UserProfilePage";
-import UserFavoriteProductPage from "./Page/User/UserFavoriteProductPage";
 import UserAddAddressPage from "./Page/User/UserAddAddressPage";
 import UserEditAddressPage from "./Page/User/UserEditAddressPage";
+import UserProfilePage from "./Page/User/UserProfilePage";
 import AdminEditProductsPage from "./Page/Admin/AdminEditProductsPage";
 import ForgetPasswordPage from "./Page/Auth/ForgetPasswordPage";
 import VerifyPasswordPage from "./Page/Auth/VerifyPasswordPage";
 import RsetPasswordPage from "./Page/Auth/ResetPasswordPage";
 import AdminAddCouponPage from "./Page/Admin/AdminAddCouponPage";
 import AdminEditCouponPage from "./Page/Admin/AdminEditCouponPage";
-import ProtectedRoutHook from "./hook/auth/protected-rout-hook";
+import ProtectedRouteHook from "./hook/auth/protected-route-hook";
 import ProtectedRoute from "./Components/Uitily/ProtectedRoute";
 import ProductsByCategory from "./Page/Products/ProductsByCategory";
+import ProductsByBrand from "./Page/Products/ProductsByBrand";
+import CartCheckout from "./Components/Cart/CartCheckout";
 
 function App() {
-  const [isUser, isAdmin, userData] = ProtectedRoutHook();
+  const [isUser, isAdmin, userData] = ProtectedRouteHook();
 
   return (
     <div className="font">
       <NavBarLogin />
-
       <BrowserRouter>
         <Routes>
           <Route index element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/allCategory" element={<AllCategoryPage />} />
-          <Route path="/allBrand" element={<AllBrandPage />} />
-          <Route path="/allProduct" element={<ShopProductsPage />} />
-          <Route path="/allProduct/:id" element={<ProductDetalisPage />} />
+          <Route path="/allcategory" element={<AllCategoryPage />} />
+          <Route path="/allbrand" element={<AllBrandPage />} />
+          <Route path="/products" element={<ShopProductsPage />} />
+          <Route path="/products/:id" element={<ProductDetalisPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route
             path="/user/forget-password"
@@ -60,17 +61,23 @@ function App() {
             path="/products/category/:id"
             element={<ProductsByCategory />}
           />
+          <Route path="/products/brand/:id" element={<ProductsByBrand />} />
 
-          <Route element={<ProtectedRoute auth={isUser} />}>
-            <Route
-              path="/order/paymethoud"
-              element={<ChoosePayMethoudPage />}
-            />
-          </Route>
+          <Route
+            path="/order/paymethoud"
+            element={
+              <ProtectedRoute auth={isUser}>
+                <ChoosePayMethoudPage />
+              </ProtectedRoute>
+            }
+          />
 
           <Route element={<ProtectedRoute auth={isAdmin} />}>
-            <Route path="/admin/allProducts" element={<AdminAddProducts />} />
             <Route path="/admin/allorders" element={<AdminAllOrdersPage />} />
+            <Route
+              path="/admin/allproducts"
+              element={<AdminAllProductsPage />}
+            />
             <Route
               path="/admin/orders/:id"
               element={<AdminOrderDetalisPage />}
@@ -83,10 +90,6 @@ function App() {
             <Route
               path="/admin/addsubcategory"
               element={<AdminAddSubCategoryPage />}
-            />
-            <Route
-              path="/admin/addproduct"
-              element={<AdminAddProductsPage />}
             />
             <Route
               path="/admin/addproduct"
@@ -106,8 +109,12 @@ function App() {
           <Route element={<ProtectedRoute auth={isUser} />}>
             <Route path="/user/allorders" element={<UserAllOrdersPage />} />
             <Route
+              path="/order/paymethoud"
+              element={<ChoosePayMethoudPage />}
+            />
+            <Route
               path="/user/favoriteproducts"
-              element={<UserFavoriteProductPage />}
+              element={<UserFavoriteProductsPage />}
             />
             <Route path="/user/addresses" element={<UserAllAddresPage />} />
             <Route path="/user/add-address" element={<UserAddAddressPage />} />

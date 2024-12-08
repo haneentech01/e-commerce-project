@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import deleteicon from "../../Assets/images/delete.png";
-import editicon from "../../Assets/images/edit.png";
+import deleteicon from "../../images/delete.png";
+import editicon from "../../images/edit.png";
 import CouponCardHook from "../../hook/coupon/coupon-card-hook";
 
 const AdminCoupnCard = ({ coupon }) => {

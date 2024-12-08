@@ -1,11 +1,11 @@
 import {
   CREATE_NEW_USER,
   RESET_PASSWORD,
+  UPDATE_USER_PROFILE,
   VERIFY_PASSWORD,
   FOREGT_PASSWORD,
   GET_CURERNT_USER,
   LOGIN_USER,
-  UPDATE_USER_PROFILE,
   UPDATE_USER_PASSWORD,
 } from "../type";
 import { useInsertData } from "../../hooks/useInsertData";
@@ -29,7 +29,7 @@ export const createNewUser = (data) => async (dispatch) => {
   }
 };
 
-//login  user (First Way With A LocalStorge)
+//login  user
 export const loginUser = (data) => async (dispatch) => {
   try {
     const response = await useInsertData(`/api/v1/auth/login`, data);
@@ -46,23 +46,22 @@ export const loginUser = (data) => async (dispatch) => {
   }
 };
 
-// This Is Anther Way To Login 
-// //login  user
-// export const getLoggedUser = () => async (dispatch) => {
-//   try {
-//     const response = await useGetDataToken(`/api/v1/users/getMe`);
-//     dispatch({
-//       type: GET_CURERNT_USER,
-//       payload: response,
-//       loading: true,
-//     });
-//   } catch (e) {
-//     dispatch({
-//       type: GET_CURERNT_USER,
-//       payload: e.response,
-//     });
-//   }
-// };
+//login  user
+export const getLoggedUser = () => async (dispatch) => {
+  try {
+    const response = await useGetDataToken(`/api/v1/users/getMe`);
+    dispatch({
+      type: GET_CURERNT_USER,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_CURERNT_USER,
+      payload: e.response,
+    });
+  }
+};
 
 //1-foregt  passwrod
 export const forgetPassword = (data) => async (dispatch) => {
@@ -81,7 +80,7 @@ export const forgetPassword = (data) => async (dispatch) => {
   }
 };
 
-//2-verify passwrod
+//2-verify  passwrod
 export const verifyPassword = (data) => async (dispatch) => {
   try {
     const response = await useInsertData(`/api/v1/auth/verifyResetCode`, data);
@@ -98,7 +97,7 @@ export const verifyPassword = (data) => async (dispatch) => {
   }
 };
 
-//3-reset  passwrod
+//2-reset  passwrod
 export const resetPassword = (data) => async (dispatch) => {
   try {
     const response = await useInsUpdateData(`/api/v1/auth/resetPassword`, data);
@@ -115,40 +114,41 @@ export const resetPassword = (data) => async (dispatch) => {
   }
 };
 
-//Update User Data 
+//update user data
 export const updateUserProfileData = (body) => async (dispatch) => {
-    try {
-        const response = await useInsUpdateData(`/api/v1/users/updateMe`, body);
-        console.log(response)
-        dispatch({
-            type: UPDATE_USER_PROFILE,
-            payload: response,
-            loading: true
-        })
+  try {
+    const response = await useInsUpdateData(`/api/v1/users/updateMe`, body);
+    console.log(response);
+    dispatch({
+      type: UPDATE_USER_PROFILE,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: UPDATE_USER_PROFILE,
+      payload: e.response,
+    });
+  }
+};
 
-    } catch (e) {
-        dispatch({
-            type: UPDATE_USER_PROFILE,
-            payload: e.response,
-        })
-    }
-}
-
-//Update User Password
+//update user password
 export const updateUserPassword = (body) => async (dispatch) => {
-    try {
-        const response = await useInsUpdateData(`/api/v1/users/changeMyPassword`, body);
-        console.log(response)
-        dispatch({
-            type: UPDATE_USER_PASSWORD,
-            payload: response,
-            loading: true
-        })
-
-    } catch (e) {
-        dispatch({
-            type: UPDATE_USER_PASSWORD,
-            payload: e.response,
-        })
-    }
-}
+  try {
+    const response = await useInsUpdateData(
+      `/api/v1/users/changeMyPassword`,
+      body
+    );
+    console.log(response);
+    dispatch({
+      type: UPDATE_USER_PASSWORD,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: UPDATE_USER_PASSWORD,
+      payload: e.response,
+    });
+  }
+};

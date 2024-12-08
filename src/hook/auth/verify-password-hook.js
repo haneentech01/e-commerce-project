@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { verifyPassword } from "../../redux/actions/authAction";
-import notify from "../useNotifaction";
 import { useNavigate } from "react-router-dom";
+import notify from "../useNotifaction";
 
 const VerifyPasswordHook = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -21,14 +20,18 @@ const VerifyPasswordHook = () => {
       return;
     }
     setLoading(true);
-    await dispatch(verifyPassword({ resetCode: code }));
+    await dispatch(
+      verifyPassword({
+        resetCode: code,
+      })
+    );
     setLoading(false);
   };
 
   const res = useSelector((state) => state.authReducer.verifyPassword);
 
   useEffect(() => {
-    if (setLoading === false) {
+    if (loading === false) {
       if (res) {
         console.log(res);
         if (res.data.status === "Success") {
@@ -37,7 +40,6 @@ const VerifyPasswordHook = () => {
             navigate("/user/reset-password");
           }, 1500);
         }
-
         if (res.data.status === "fail") {
           notify("الكود خاطئ او انتهت صلاحيته", "error");
         }

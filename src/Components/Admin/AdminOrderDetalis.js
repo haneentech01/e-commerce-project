@@ -1,101 +1,140 @@
-import React from 'react'
-import { Row,Col } from 'react-bootstrap'
-import CartItem from '../Cart/CartItem'
+import React from "react";
+import { Row, Col } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import GetOrderDetalisHook from "../../hook/admin/get-order-detalis-hook";
+import UserAllOrderItem from "../User/UserAllOrderItem";
+import ChangeOrderStatusHook from "../../hook/admin/change-order-status-hook";
+import { ToastContainer } from "react-toastify";
 
 const AdminOrderDetalis = () => {
-    return (
-        <div>
-            <div className='admin-content-text'>تفاصيل الطلب رقم#55</div>
-            <CartItem />
-            <CartItem />
-            <CartItem />
+  const { id } = useParams();
+  const [orderData, cartItems] = GetOrderDetalisHook(id);
+  const [onChangePaid, onChangeDeliver, changePayOrder, changeDeliverOrder] =
+    ChangeOrderStatusHook(id);
 
-            <Row className="justify-content-center mt-4 user-data">
-                <Col xs="12" className=" d-flex">
-                    <div className="admin-content-text py-2">تفاصيل العميل</div>
-                </Col>
-                <Col xs="12" className="d-flex">
-                    <div
-                        style={{
-                            color: "#555550",
-                            fontFamily: "Almarai",
-                            fontSize: "16px",
-                        }}>
-                        الاسم:
-                    </div>
+  return (
+    <div>
+      <div className="mt-4">
+        <UserAllOrderItem orderItem={orderData} />
+      </div>
 
-                    <div
-                        style={{
-                            color: "#979797",
-                            fontFamily: "Almarai",
-                            fontSize: "16px",
-                        }}
-                        className="mx-2">
-                        احمد عبدالله
-                    </div>
-                </Col>
+      <Row className="justify-content-center mt-4 user-data">
+        <Col xs="12" className=" d-flex">
+          <div className="admin-content-text py-2">تفاصيل العميل</div>
+        </Col>
 
-                <Col xs="12" className="d-flex">
-                    <div
-                        style={{
-                            color: "#555550",
-                            fontFamily: "Almarai",
-                            fontSize: "16px",
-                        }}>
-                        رقم الهاتف:
-                    </div>
+        <Col xs="12" className="d-flex">
+          <div
+            style={{
+              color: "#555550",
+              fontFamily: "Almarai",
+              fontSize: "16px",
+            }}
+          >
+            الاسم:
+          </div>
 
-                    <div
-                        style={{
-                            color: "#979797",
-                            fontFamily: "Almarai",
-                            fontSize: "16px",
-                        }}
-                        className="mx-2">
-                        0021313432423
-                    </div>
-                </Col>
+          <div
+            style={{
+              color: "#979797",
+              fontFamily: "Almarai",
+              fontSize: "16px",
+            }}
+            className="mx-2"
+          >
+            {orderData ? (orderData.user ? orderData.user.name : "") : ""}
+          </div>
+        </Col>
 
-                <Col xs="12" className="d-flex">
-                    <div
-                        style={{
-                            color: "#555550",
-                            fontFamily: "Almarai",
-                            fontSize: "16px",
-                        }}>
-                        الايميل:
-                    </div>
+        <Col xs="12" className="d-flex">
+          <div
+            style={{
+              color: "#555550",
+              fontFamily: "Almarai",
+              fontSize: "16px",
+            }}
+          >
+            رقم الهاتف:
+          </div>
 
-                    <div
-                        style={{
-                            color: "#979797",
-                            fontFamily: "Almarai",
-                            fontSize: "16px",
-                        }}
-                        className="mx-2">
-                        ahmed@gmail.com
-                    </div>
-                </Col>
+          <div
+            style={{
+              color: "#979797",
+              fontFamily: "Almarai",
+              fontSize: "16px",
+            }}
+            className="mx-2"
+          >
+            {orderData ? (orderData.user ? orderData.user.phone : "") : ""}
+          </div>
+        </Col>
 
-                <div className=" d-inline px-4 border text-center pt-2">
-                    المجموع ٤٠٠٠ جنيه
-                </div>
-                
-                <div className="d-flex mt-2 justify-content-center">
-                    <select
-                        name="languages"
-                        id="lang"
-                        className="select input-form-area mt-1  text-center px-2 w-50">
-                        <option value="val">حالة الطلب</option>
-                        <option value="val2">قيد التنفيذ</option>
-                        <option value="val2">تم الانتهاء</option>
-                        <option value="val2">الغاء</option>
-                    </select>
-                    <button className="btn-a px-3 d-inline mx-2 ">حفظ </button>
-                </div>
-            </Row>
+        <Col xs="12" className="d-flex">
+          <div
+            style={{
+              color: "#555550",
+              fontFamily: "Almarai",
+              fontSize: "16px",
+            }}
+          >
+            الايميل:
+          </div>
+
+          <div
+            style={{
+              color: "#979797",
+              fontFamily: "Almarai",
+              fontSize: "16px",
+            }}
+            className="mx-2"
+          >
+            {orderData ? (orderData.user ? orderData.user.email : "") : ""}
+          </div>
+        </Col>
+
+        <div className="d-flex mt-2 justify-content-center mb-2">
+          <div className="d-flex align-items-center mx-2">
+            <select
+              onChange={onChangePaid}
+              name="pay"
+              id="payid"
+              className="select input-form-area text-center w-60"
+            >
+              <option value="0">الدفع</option>
+              <option value="true">تم الدفع</option>
+              <option value="false">لم يتم الدفع</option>
+            </select>
+            <button
+              onClick={changePayOrder}
+              className="btn-a px-3 d-inline mx-2 "
+            >
+              حفظ
+            </button>
+          </div>
+
+          <div className="d-flex align-items-center mx-2">
+            <select
+              onChange={onChangeDeliver}
+              name="deliver"
+              id="deliver"
+              className="select input-form-area text-center w-60"
+            >
+              <option value="0">التوصيل</option>
+              <option value="true">تم التوصيل</option>
+              <option value="false">لم يتم التوصيل</option>
+            </select>
+            <button
+              onClick={changeDeliverOrder}
+              className="btn-a px-3 d-inline mx-2 "
+            >
+              حفظ
+            </button>
+          </div>
         </div>
-    )
-}
+      </Row>
+      <ToastContainer />
+    </div>
+  );
+};
 
-export default AdminOrderDetalis
+export default AdminOrderDetalis;

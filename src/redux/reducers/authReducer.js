@@ -1,17 +1,18 @@
 import {
   CREATE_NEW_USER,
-  LOGIN_USER,
-  FOREGT_PASSWORD,
-  VERIFY_PASSWORD,
-  RESET_PASSWORD,
-  GET_CURERNT_USER,
-  UPDATE_USER_PROFILE,
   UPDATE_USER_PASSWORD,
+  UPDATE_USER_PROFILE,
+  RESET_PASSWORD,
+  VERIFY_PASSWORD,
+  FOREGT_PASSWORD,
+  LOGIN_USER,
+  GET_CURERNT_USER,
 } from "../type";
 
 const inital = {
   createUser: [],
   loginUser: [],
+  currentUser: [],
   forgetPassword: [],
   verifyPassword: [],
   resetPassword: [],
@@ -19,6 +20,7 @@ const inital = {
   userChangePassword: [],
   loading: true,
 };
+
 const authReducer = (state = inital, action) => {
   switch (action.type) {
     case CREATE_NEW_USER:
@@ -31,6 +33,12 @@ const authReducer = (state = inital, action) => {
       return {
         ...state,
         loginUser: action.payload,
+      };
+
+    case GET_CURERNT_USER:
+      return {
+        ...state,
+        currentUser: action.payload,
       };
 
     case FOREGT_PASSWORD:

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import Multiselect from 'multiselect-react-dropdown';
-import add from '../../Assets/images/add.png';
+import add from '../../images/add.png';
 import MultiImageInput from 'react-multiple-image-input';
 import { CompactPicker } from 'react-color'
 import { ToastContainer } from 'react-toastify';

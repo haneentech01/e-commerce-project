@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { getOneCategory } from '../../redux/actions/subcategoryAction';
-import { getOneProduct } from '../../redux/actions/productsAction';
+import { createProduct, getOneProduct } from '../../redux/actions/productsAction';
 import notify from './../../hook/useNotifaction';
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllCategory } from '../../redux/actions/categoryAction'
 import { getAllBrand } from './../../redux/actions/brandAction';
 import { updateProducts } from './../../redux/actions/productsAction';
+import baseUrl from './../../Api/baseURL';
 
 const AdminEditProductsHook = (id) => {
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
     useEffect(() => {
         const run = async () => {
             await dispatch(getOneProduct(id))
@@ -20,7 +21,7 @@ const AdminEditProductsHook = (id) => {
     }, [])
 
     //get one product details
-    const item = useSelector((state) => state.allProducts.oneProduct)
+    const item = useSelector((state) => state.allproducts.oneProduct)
     //get last catgeory state from redux
     const category = useSelector(state => state.allCategory.category)
     //get last brand state from redux
@@ -54,6 +55,7 @@ const AdminEditProductsHook = (id) => {
 
     useEffect(() => {
         if (item.data) {
+            console.log(item.data.images)
             setImages(item.data.images)
             setProdName(item.data.title)
             setProdDescription(item.data.description)
@@ -71,31 +73,25 @@ const AdminEditProductsHook = (id) => {
         event.persist();
         setProdName(event.target.value)
     }
-
     //to change name state
     const onChangeDesName = (event) => {
         event.persist();
         setProdDescription(event.target.value)
     }
-
     //to change name state
     const onChangePriceBefor = (event) => {
         event.persist();
         setPriceBefore(event.target.value)
     }
-
     //to change name state
     const onChangePriceAfter = (event) => {
         event.persist();
         setPriceAftr(event.target.value)
-    }
-
-    //to change name state
+    }  //to change name state
     const onChangeQty = (event) => {
         event.persist();
         setQty(event.target.value)
     }
-
     const onChangeColor = (event) => {
         event.persist();
         setShowColor(!showColor)
@@ -115,11 +111,12 @@ const AdminEditProductsHook = (id) => {
         setColors(newColor)
     }
 
+
+
     //when selet category store id
     const onSeletCategory = async (e) => {
         setCatID(e.target.value)
     }
-
     useEffect(() => {
         if (CatID != 0) {
             const run = async () => {
@@ -150,7 +147,7 @@ const AdminEditProductsHook = (id) => {
             bstr = atob(arr[1]),
             n = bstr.length,
             u8arr = new Uint8Array(n);
-        
+
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n);
         }
@@ -175,7 +172,7 @@ const AdminEditProductsHook = (id) => {
             notify("من فضلك اكمل البيانات", "warn")
             return;
         }
-
+        console.log(images[0])
         let imgCover;
         if (images[0].length <= 1000) {
             convertURLtoFile(images[0]).then(val => imgCover = val)
@@ -195,11 +192,13 @@ const AdminEditProductsHook = (id) => {
                 }
             })
 
+
         const formData = new FormData();
         formData.append("title", prodName);
         formData.append("description", prodDescription);
         formData.append("quantity", qty);
         formData.append("price", priceBefore);
+
         formData.append("category", CatID);
         formData.append("brand", BrandID);
 
@@ -208,24 +207,28 @@ const AdminEditProductsHook = (id) => {
             itemImages.map((item) => formData.append("images", item))
         }, 1000);
 
+        setTimeout(() => {
+            console.log(imgCover)
+            console.log(itemImages)
+        }, 1000);
 
         colors.map((color) => formData.append("availableColors", color))
         seletedSubID.map((item) => formData.append("subcategory", item._id))
         setTimeout(async () => {
-            setLoading(true)
-            await dispatch(updateProducts(id, formData))
-            setLoading(false)
+            // setLoading(true)
+            //   await dispatch(updateProducts(id, formData))
+            //  setLoading(false)
         }, 1000);
 
     }
 
     //get create meesage
-    const product = useSelector(state => state.allProducts.updateProducts)
+    const product = useSelector(state => state.allproducts.updateProducts)
 
     useEffect(() => {
 
         if (loading === false) {
-            setCatID(0)
+            //setCatID(0)
             setColors([])
             setImages([])
             setProdName('')
@@ -239,9 +242,9 @@ const AdminEditProductsHook = (id) => {
 
             if (product) {
                 if (product.status === 200) {
-                    notify("تم التعديل بنجاح", "success");
+                    notify("تم التعديل بنجاح", "success")
                 } else {
-                    notify("هناك مشكلة", "error");
+                    notify("هناك مشكله", "error")
                 }
             }
         }

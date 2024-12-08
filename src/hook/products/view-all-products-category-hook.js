@@ -1,37 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsByCategory } from "./../../redux/actions/productsAction";
+import { getAllProductsByCategory } from './../../redux/actions/productsAction';
 const ViewAllProductsCategoryHook = (catID) => {
-  let limit = 8;
-  const dispatch = useDispatch();
 
-  const getProduct = async () => {
-    await dispatch(getAllProductsByCategory("", limit, catID));
-  };
-  useEffect(() => {
-    getProduct();
-  }, []);
+    let limit = 8;
+    const dispatch = useDispatch();
 
-  //when click pagination
-  const onPress = async (page) => {
-    await dispatch(getAllProductsByCategory(page, limit, catID));
-  };
+    const getProduct = async () => {
+        await dispatch(getAllProductsByCategory('', limit, catID))
+    }
+    useEffect(() => {
+        getProduct()
+    }, [])
 
-  const allProducts = useSelector((state) => state.allProducts.allProductCat);
+    //when click pagination
+    const onPress = async (page) => {
+        await dispatch(getAllProductsByCategory(page, limit, catID))
+    }
 
-  let items = [];
-  let pagination = [];
-  try {
-    if (allProducts.data) items = allProducts.data;
-    else items = [];
-  } catch (e) {}
-  try {
-    if (allProducts.paginationResult)
-      pagination = allProducts.paginationResult.numberOfPages;
-    else pagination = [];
-  } catch (e) {}
+    const allProducts = useSelector((state) => state.allproducts.allProductCat)
 
-  return [items, pagination, onPress];
-};
+    let items = []; let pagination = [];
+    try {
+        if (allProducts.data)
+            items = allProducts.data;
+        else
+            items = []
+    } catch (e) { }
+    try {
+        if (allProducts.paginationResult)
+            pagination = allProducts.paginationResult.numberOfPages;
+        else
+            pagination = []
+    } catch (e) { }
 
-export default ViewAllProductsCategoryHook;
+
+    return [items, pagination, onPress]
+}
+
+export default ViewAllProductsCategoryHook

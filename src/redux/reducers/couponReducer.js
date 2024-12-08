@@ -1,10 +1,9 @@
-import React from "react";
 import {
   ADD_COUPON,
-  DELTET_COUPON,
   EDIT_COUPON,
   GET_ALL_COUPON,
   GET_ONE_COUPON,
+  DELTET_COUPON,
 } from "../type";
 
 const inital = {

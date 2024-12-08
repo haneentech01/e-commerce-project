@@ -1,8 +1,8 @@
 import React from "react";
 import { Row, Col, Modal, Button } from "react-bootstrap";
-import rate from "../../Assets/images/rate.png";
-import deleteicon from "../../Assets/images/delete.png";
-import editicon from "../../Assets/images/edit.png";
+import rate from "../../images/rate.png";
+import deleteicon from "../../images/delete.png";
+import editicon from "../../images/edit.png";
 import { ToastContainer } from "react-toastify";
 import DeleteRateHook from "../../hook/review/delete-rate-hook";
 import EditRateHook from "../../hook/review/edit-rate-hook";

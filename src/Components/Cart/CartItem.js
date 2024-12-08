@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
-import mobile from "../../Assets/images/mobile.png";
-import deleteicon from "../../Assets/images/delete.png";
+import mobile from "../../images/mobile.png";
+import deleteicon from "../../images/delete.png";
 import DeleteCartHook from "../../hook/cart/delete-cart-hook";
 import UpdateCartHook from "../../hook/cart/update-cart-hook";
 
@@ -35,7 +35,7 @@ const CartItem = ({ item }) => {
       <img
         width="160px"
         height="197px"
-        src={item.product.imageCover || mobile}
+        src={item.product ? item.product.imageCover : mobile}
         alt=""
       />
 

@@ -7,7 +7,7 @@ import {
 import { useGetData } from "../../hooks/useGetData";
 import { useInsertDataWithImage } from "../../hooks/useInsertData";
 
-// Get All Category
+//get all category
 export const getAllCategory = (limit) => async (dispatch) => {
   try {
     const response = await useGetData(`/api/v1/categories?limit=${limit}`);
@@ -16,7 +16,6 @@ export const getAllCategory = (limit) => async (dispatch) => {
       payload: response,
     });
   } catch (e) {
-    console.log("Error fetching categories:", e);
     dispatch({
       type: GET_ERROR,
       payload: "Error " + e,
@@ -24,7 +23,7 @@ export const getAllCategory = (limit) => async (dispatch) => {
   }
 };
 
-// Get One Category
+//get one category with
 export const getOneCategory = (id) => async (dispatch) => {
   try {
     const response = await useGetData(`/api/v1/categories/${id}`);
@@ -40,7 +39,7 @@ export const getOneCategory = (id) => async (dispatch) => {
   }
 };
 
-// Get All Category Page
+//get all category with pagination
 export const getAllCategoryPage = (page) => async (dispatch) => {
   try {
     const response = await useGetData(
@@ -58,7 +57,7 @@ export const getAllCategoryPage = (page) => async (dispatch) => {
   }
 };
 
-// Create Category
+//get all category with pagination
 export const createCategory = (formData) => async (dispatch) => {
   try {
     const response = await useInsertDataWithImage(
@@ -68,6 +67,7 @@ export const createCategory = (formData) => async (dispatch) => {
     dispatch({
       type: CREATE_CATEGORY,
       payload: response,
+      loading: true,
     });
   } catch (e) {
     dispatch({
@@ -76,8 +76,3 @@ export const createCategory = (formData) => async (dispatch) => {
     });
   }
 };
-
-
-
-
-

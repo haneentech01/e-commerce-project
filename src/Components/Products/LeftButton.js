@@ -1,5 +1,5 @@
 import React from 'react'
-import next from '../../Assets/images/next.png'
+import next from '../../images/next.png'
 
 const LeftButton = ( onClick, onDisable ) => {
     return (

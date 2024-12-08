@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container,Row,Col } from 'react-bootstrap'
-import laptops from '../../Assets/images/laptops.png'
+import laptops from '../../images/laptops.png'
 
 const DiscountSection = () => {
     return (
