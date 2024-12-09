@@ -29,7 +29,7 @@ const AdminAllProductsCard = ({ item }) => {
         </Modal.Header>
 
         <Modal.Body>
-          <div className="font">هل انتا متاكد من عملية الحذف للمنتج</div>
+          <div className="font">هل انت متاكد من عملية الحذف للمنتج</div>
         </Modal.Body>
 
         <Modal.Footer>
@@ -55,7 +55,7 @@ const AdminAllProductsCard = ({ item }) => {
         <Row className="d-flex justify-content-center px-2">
           <Col className=" d-flex justify-content-between">
             <div onClick={handleShow} className="d-inline item-delete-edit">
-              ازاله
+              ازالة
             </div>
             <Link
               to={`/admin/editproduct/${item._id}`}
@@ -89,7 +89,6 @@ const AdminAllProductsCard = ({ item }) => {
                         >
                           {item.price}
                         </span>
-                        {" "}
                         {item.priceAfterDiscount}
                       </div>
                     ) : (

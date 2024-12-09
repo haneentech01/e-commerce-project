@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import ViewAddressesHook from "./../../hook/user/view-addresses-hook";
 import OrderPayCashHook from "./../../hook/checkout/order-pay-cash-hook";
 import { ToastContainer } from "react-toastify";
+import OrderPayCardHook from "../../hook/checkout/order-pay-card-hook";
+import notify from "./../../hook/useNotifaction";
+import GetAllUserCartHook from "../../hook/cart/get-all-user-cart-hook";
 
 const ChoosePayMethoud = () => {
   const [res] = ViewAddressesHook();
   const [handelChooseAddress, addressDetalis, handelCreateOrderCash] =
     OrderPayCashHook();
+  const [handelCreateOrderCARD] = OrderPayCardHook(addressDetalis);
+  const [, , totalCartPrice, , totalCartPriceAfterDiscount] =
+    GetAllUserCartHook();
+
+  const [type, setType] = useState();
+  const changeMathoud = (e) => {
+    setType(e.target.value);
+  };
+
+  const handelPay = () => {
+    if (type === "CARD") {
+      handelCreateOrderCARD();
+    } else if (type === "CASH") {
+      handelCreateOrderCash();
+    } else {
+      notify("من فضلك اختر طريقة دفع", "warn");
+    }
+  };
 
   return (
     <div>
@@ -16,15 +37,16 @@ const ChoosePayMethoud = () => {
         <Row className="d-flex justify-content-between ">
           <Col xs="12" className="my-2">
             <input
+              onChange={changeMathoud}
               style={{ cursor: "pointer" }}
               name="group"
               id="group1"
               type="radio"
-              value="الدفع عن طريق الفيزا"
+              value="CARD"
               className="mt-2"
             />
             <label style={{ cursor: "pointer" }} className="mx-2" for="group1">
-              الدفع عن طريق البطاقه الائتمانية
+              الدفع عن طريق البطاقة الائتمانية
             </label>
           </Col>
         </Row>
@@ -32,11 +54,12 @@ const ChoosePayMethoud = () => {
         <Row className="mt-2">
           <Col xs="12" className="d-flex">
             <input
+              onChange={changeMathoud}
               style={{ cursor: "pointer" }}
               name="group"
               id="group2"
               type="radio"
-              value="الدفع عند الاستلام"
+              value="CASH"
               className="mt-2"
             />
             <label style={{ cursor: "pointer" }} className="mx-2" for="group2">
@@ -74,9 +97,13 @@ const ChoosePayMethoud = () => {
 
       <Row>
         <Col xs="12" className="d-flex justify-content-end">
-          <div className="product-price d-inline   border">34000 جنية</div>
+          <div className="product-price d-inline   border">
+            {totalCartPriceAfterDiscount >= 1
+              ? `${totalCartPrice} جنيه ... بعد الخصم ${totalCartPriceAfterDiscount} `
+              : `${totalCartPrice} جنيه`}
+          </div>
           <div
-            onClick={handelCreateOrderCash}
+            onClick={handelPay}
             className="product-cart-add px-3 pt-2 d-inline me-2"
           >
             اتمام الشراء
